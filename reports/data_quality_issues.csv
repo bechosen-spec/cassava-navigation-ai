@@ -1,0 +1,3 @@
+path,issue_type,detail
+ed2b0d696eb04c4d574ddcb0d48c100e,duplicate_image,/Users/macbook/Documents/cassava-navigation-ai/data/extracted/data/images/train/.ipynb_checkpoints/G0217783_JPG.rf.9e12c20e7d137399b032d8da66ad7426-checkpoint.jpg; /Users/macbook/Documents/cassava-navigation-ai/data/extracted/data/images/train/G0217783_JPG.rf.9e12c20e7d137399b032d8da66ad7426.jpg
+/Users/macbook/Documents/cassava-navigation-ai/data/extracted/data/images/train/.ipynb_checkpoints/G0217783_JPG.rf.9e12c20e7d137399b032d8da66ad7426-checkpoint.jpg,image_without_label_file,No matching label file with same split and stem

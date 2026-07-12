@@ -1,0 +1,7 @@
+metric,value
+total_images,803
+total_label_files,802
+num_classes,3
+annotation_format,YOLO polygon segmentation
+data_quality_problems,2
+navigation_targets_present,False
