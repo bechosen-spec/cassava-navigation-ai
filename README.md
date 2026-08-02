@@ -1,8 +1,8 @@
 # Vision-Based Navigation and Control Techniques for Autonomous Cassava Farm Robots
 
-This repository contains Phase 1 of the `cassava-navigation-ai` research project: a reproducible dataset audit for cassava farm imagery intended to support later work on segmentation, machine learning, ANFIS, deep learning, and robot navigation research.
+This repository contains reproducible dataset-audit and annotation-validation workflows for the `cassava-navigation-ai` research project. The dataset supports later work on segmentation, machine learning, ANFIS, deep learning, and robot navigation research.
 
-No machine learning or deep learning model is trained in this phase.
+No machine learning or deep learning model has been trained yet.
 
 ## Research Objectives
 
@@ -13,6 +13,8 @@ No machine learning or deep learning model is trained in this phase.
 - Generate publication-quality audit figures and annotated image samples.
 - Determine whether explicit robot navigation targets are present.
 - Provide recommendations before later segmentation or navigation-control phases.
+- Confirm whether class semantics are available from reliable metadata.
+- Validate polygon-level annotation quality and prepare manual review contact sheets.
 
 ## Dataset Overview
 
@@ -27,6 +29,8 @@ The audited dataset is a Roboflow-style image dataset with:
 
 Class names were not available in metadata, so the audit reports them conservatively as `Class 0`, `Class 1`, and `Class 2`.
 
+Phase 2 excludes hidden/system artifacts such as `.ipynb_checkpoints` from every analysis. After filtering those artifacts, the validation set contains `802` images with labels and `28,655` structurally valid polygon rows.
+
 ## Project Structure
 
 ```text
@@ -36,9 +40,13 @@ cassava-navigation-ai/
 │   ├── extracted/
 │   └── processed/
 ├── notebooks/
-│   └── 01_dataset_audit.ipynb
+│   ├── 01_dataset_audit.ipynb
+│   └── 02_annotation_validation.ipynb
 ├── src/
-│   └── dataset_audit.py
+│   ├── dataset_audit.py
+│   └── annotation_validation.py
+├── configs/
+│   └── classes.yaml
 ├── reports/
 ├── figures/
 ├── requirements.txt
@@ -75,6 +83,24 @@ The script defaults to `/mnt/data/data-20260610T182545Z-3-001.zip` when that fil
 
 The audit extracts data into `data/extracted/`, writes derived tables to `data/processed/`, and regenerates the report and figures.
 
+## Reproduce The Annotation Validation
+
+After Phase 1 has extracted the dataset, run:
+
+```bash
+python src/annotation_validation.py
+```
+
+This Phase 2 command:
+
+- filters `.ipynb_checkpoints` and hidden/system artifacts from analysis
+- searches metadata, notebooks, previous reports, and annotation export files for class names
+- writes `configs/classes.yaml`
+- validates every YOLO polygon row
+- creates class-specific and edge-case contact sheets for manual review
+- does not modify the extracted dataset
+- does not train a model
+
 ## Generated Reports
 
 The audit writes:
@@ -85,6 +111,11 @@ The audit writes:
 - `reports/annotation_statistics.csv`
 - `reports/data_quality_issues.csv`
 - `reports/dataset_audit_report.md`
+- `reports/class_semantics_review.csv`
+- `reports/polygon_quality_checks.csv`
+- `reports/manual_review_queue.csv`
+- `reports/split_consistency.csv`
+- `reports/annotation_quality_report.md`
 
 The main narrative report is:
 
@@ -106,6 +137,11 @@ Generated figures are stored in `figures/`:
 - `image_aspect_ratio_distribution.png`
 - `annotation_area_distribution.png`
 - `class_imbalance.png`
+- `class_0_review.png`
+- `class_1_review.png`
+- `class_2_review.png`
+- `multiclass_review.png`
+- `annotation_edge_cases.png`
 
 The original ZIP is not modified. Extracted raw dataset contents under `data/extracted/` are left unchanged after extraction.
 
@@ -119,6 +155,14 @@ jupyter notebook notebooks/01_dataset_audit.ipynb
 
 Run all cells. The notebook imports and executes the same reusable Python functions as the command-line script, so notebook and script outputs remain consistent.
 
+For Phase 2:
+
+```bash
+jupyter notebook notebooks/02_annotation_validation.ipynb
+```
+
+Run all cells to regenerate the class-semantics review tables, polygon quality checks, manual review queue, split consistency summary, and contact sheets.
+
 ## Current Status
 
 Phase 1 is complete:
@@ -130,4 +174,13 @@ Phase 1 is complete:
 - Annotated samples and graphs generated.
 - Navigation-target availability assessed.
 
-Recommended next step: confirm the semantic meaning of each class ID, then decide whether Phase 2 targets segmentation only or requires additional navigation-control labels.
+Phase 2 is complete:
+
+- Hidden/system artifacts are excluded from analyses without modifying the original dataset.
+- No reliable class-name metadata was found.
+- `configs/classes.yaml` marks all classes as unconfirmed.
+- `28,655` polygon rows are structurally valid.
+- `216` polygons are flagged for manual review due to extremely small or extremely large normalized area.
+- No exact duplicate image hashes were found across train, validation, and test splits.
+
+Recommended next step: manually confirm the semantic meaning of Class 0, Class 1, and Class 2 using the generated contact sheets before any segmentation training.
