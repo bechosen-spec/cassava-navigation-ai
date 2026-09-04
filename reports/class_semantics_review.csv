@@ -1,4 +1,4 @@
 class_id,current_name,status,metadata_source,images_containing_class,polygon_count,median_area_normalized,human_confirmation_required
-0,Class 0,unconfirmed,,787,5301,0.016652425132751447,Yes
-1,Class 1,unconfirmed,,792,4494,0.01394653319664001,Yes
-2,Class 2,unconfirmed,,801,18860,0.0008405049659728769,Yes
+0,path,confirmed,Explicit human confirmation in Phase A request,787,5301,0.0166524251327514,No
+1,cassava_leaves,confirmed,Explicit human confirmation in Phase A request,792,4494,0.01394653319664,No
+2,ridge,confirmed,Explicit human confirmation in Phase A request,801,18860,0.0008405049659728,No

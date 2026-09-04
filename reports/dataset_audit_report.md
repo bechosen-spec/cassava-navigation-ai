@@ -1,3 +1,5 @@
+> Phase A update: classes confirmed (0=path, 1=cassava_leaves, 2=ridge). Historical nominal counts are 603/120/80; artifact filtering gives 602/120/80 usable images. The extra training image is a checkpoint duplicate, not an additional sample.
+
 # Cassava Farm Image Dataset Audit
 
 ## Dataset overview
@@ -1693,6 +1695,6 @@ The majority/minority annotation ratio is 4.20. A high ratio may require stratif
 
 ## Recommendations for next step
 1. Review the quality issue CSV and inspect any severe image/label mismatches.
-2. Confirm the semantic meaning of each class ID before model training.
+2. Use the human-confirmed mapping: 0=path, 1=cassava_leaves, 2=ridge.
 3. Decide whether Phase 2 targets segmentation only or navigation control; collect navigation labels if the latter is required.
 4. Create a small frozen validation protocol before any training begins.

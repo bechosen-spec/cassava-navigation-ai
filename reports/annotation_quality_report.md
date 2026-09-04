@@ -1,3 +1,5 @@
+> Phase A update: classes confirmed (0=path, 1=cassava_leaves, 2=ridge). Historical nominal counts are 603/120/80; artifact filtering gives 602/120/80 usable images. The extra training image is a checkpoint duplicate, not an additional sample.
+
 # Phase 2 Annotation Quality and Class Semantics Report
 
 ## Scope
@@ -5,12 +7,12 @@ This Phase 2 review filters hidden/system artifacts from all analyses and valida
 After filtering hidden/system artifacts, the analyzed dataset contains 802 images and 802 images with labels.
 
 ## Class-name search
-- Class names found: No
-- Class-name status: unconfirmed
+- Class names confirmed by human: Yes
+- Class-name status: confirmed
 - Source count searched/referenced: 6
-- Discovered class names: 0: Class 0, 1: Class 1, 2: Class 2
-- Meanings confidently identified: No
-- Human confirmation required for class IDs: 0, 1, 2
+- Confirmed class names: 0: path, 1: cassava_leaves, 2: ridge
+- Meanings human-confirmed: Yes
+- No further class confirmation required; preserve this mapping.
 
 ## Metadata sources reviewed
 | source_path                                                                       | source_type                | reliability              | discovered_names   |
@@ -89,7 +91,7 @@ No duplicate image hashes were found after hidden/system artifacts were excluded
 Cross-split data leakage through exact duplicate image hashes: Not detected.
 
 ## Training readiness
-The dataset appears technically usable for segmentation training if class semantics are confirmed and the small set of suspicious polygon cases is reviewed. Do not begin training until class meanings are approved by a human domain reviewer.
+The classes are human-confirmed and the dataset is technically usable. Retain 198 extremely small and 18 extremely large polygons as warnings, not automatic errors.
 
 ## Exclusion recommendations
 Exclude hidden/system artifacts from every analysis and training manifest. Review rows in `reports/polygon_quality_checks.csv` where `is_suspicious` is true before deciding whether to exclude individual polygons or images.
@@ -100,22 +102,22 @@ Class 0:
 Observed visual content:
 Proposed meaning:
 Confidence:
-Human confirmation required: Yes
+Human confirmation required: No (confirmed by project owner)
 
 Class 1:
 Observed visual content:
 Proposed meaning:
 Confidence:
-Human confirmation required: Yes
+Human confirmation required: No (confirmed by project owner)
 
 Class 2:
 Observed visual content:
 Proposed meaning:
 Confidence:
-Human confirmation required: Yes
+Human confirmation required: No (confirmed by project owner)
 
 ## Decisions required before training
-1. Confirm the visual meaning of Class 0, Class 1, and Class 2 using the contact sheets.
-2. Decide whether suspicious polygons in `polygon_quality_checks.csv` should be corrected, excluded, or accepted.
+1. Preserve the human-confirmed class mapping.
+2. Retain suspicious polygons unless technically invalid.
 3. Confirm whether the class distribution and split differences are acceptable for the intended segmentation experiment.
 4. Keep navigation-control work paused until explicit navigation labels or a justified target-generation method exists.
