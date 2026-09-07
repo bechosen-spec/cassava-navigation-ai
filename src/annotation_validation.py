@@ -24,6 +24,7 @@ os.environ.setdefault("MPLCONFIGDIR", str(Path(".matplotlib-cache").resolve()))
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import yaml
 from PIL import Image, ImageDraw
 
 
@@ -411,6 +412,9 @@ def search_class_name_sources(paths: Phase2Paths) -> tuple[dict[int, str], list[
 def default_class_names(discovered: dict[int, str]) -> tuple[dict[int, str], str]:
     """Return class names and confirmation status."""
 
+    confirmed = yaml.safe_load((Path(__file__).resolve().parents[1] / "configs/classes.yaml").read_text())
+    if confirmed.get("status") == "confirmed":
+        return confirmed["names"], "confirmed"
     if all(class_id in discovered for class_id in EXPECTED_CLASS_IDS):
         return {class_id: discovered[class_id] for class_id in sorted(EXPECTED_CLASS_IDS)}, "metadata_found_unconfirmed_visual_meaning"
     return {class_id: f"Class {class_id}" for class_id in sorted(EXPECTED_CLASS_IDS)}, "unconfirmed"
@@ -576,6 +580,8 @@ def duplicate_summary(image_df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
 def write_classes_yaml(path: Path, class_names: dict[int, str], status: str) -> None:
     """Write the simple class configuration file."""
 
+    if path.exists() and yaml.safe_load(path.read_text()).get("status") == "confirmed":
+        return
     path.parent.mkdir(parents=True, exist_ok=True)
     if status == "unconfirmed":
         values = {class_id: f"class_{class_id}_unconfirmed" for class_id in sorted(EXPECTED_CLASS_IDS)}
@@ -621,7 +627,7 @@ def write_report(
     cooccurrence = class_cooccurrence(annotation_df)
 
     class_names_found = class_status != "unconfirmed"
-    can_identify_meanings = False
+    can_identify_meanings = class_status == "confirmed"
     report_lines = [
         "# Phase 2 Annotation Quality and Class Semantics Report",
         "",
@@ -635,7 +641,7 @@ def write_report(
         f"- Source count searched/referenced: {len(metadata_sources)}",
         "- Discovered class names: " + ", ".join(f"{class_id}: {name}" for class_id, name in class_names.items()),
         f"- Meanings confidently identified: {'Yes' if can_identify_meanings else 'No'}",
-        "- Human confirmation required for class IDs: 0, 1, 2",
+        "- Human confirmation required: " + ("No" if class_status == "confirmed" else "Yes"),
         "",
         "## Metadata sources reviewed",
         pd.DataFrame(metadata_sources).to_markdown(index=False) if metadata_sources else "No reliable class-name metadata files were found.",
@@ -670,34 +676,20 @@ def write_report(
         f"Cross-split data leakage through exact duplicate image hashes: {'Detected' if cross_split_duplicates else 'Not detected'}.",
         "",
         "## Training readiness",
-        "The dataset appears technically usable for segmentation training if class semantics are confirmed and the small set of suspicious polygon cases is reviewed. Do not begin training until class meanings are approved by a human domain reviewer.",
+        "Classes are human-confirmed: 0=path, 1=cassava_leaves, 2=ridge. Suspicious polygon sizes are review warnings and retained unless technically invalid.",
         "",
         "## Exclusion recommendations",
         "Exclude hidden/system artifacts from every analysis and training manifest. Review rows in `reports/polygon_quality_checks.csv` where `is_suspicious` is true before deciding whether to exclude individual polygons or images.",
         "",
-        "## Manual confirmation section",
+        "## Human-confirmed semantics",
         "",
-        "Class 0:",
-        "Observed visual content:",
-        "Proposed meaning:",
-        "Confidence:",
-        "Human confirmation required: Yes",
+        "- Class 0: path (confirmed by project owner)",
+        "- Class 1: cassava_leaves (confirmed by project owner)",
+        "- Class 2: ridge (confirmed by project owner)",
         "",
-        "Class 1:",
-        "Observed visual content:",
-        "Proposed meaning:",
-        "Confidence:",
-        "Human confirmation required: Yes",
-        "",
-        "Class 2:",
-        "Observed visual content:",
-        "Proposed meaning:",
-        "Confidence:",
-        "Human confirmation required: Yes",
-        "",
-        "## Decisions required before training",
-        "1. Confirm the visual meaning of Class 0, Class 1, and Class 2 using the contact sheets.",
-        "2. Decide whether suspicious polygons in `polygon_quality_checks.csv` should be corrected, excluded, or accepted.",
+        "## Preserved decisions",
+        "1. Preserve confirmed classes: 0=path, 1=cassava_leaves, 2=ridge.",
+        "2. Retain the 198 extremely small and 18 extremely large polygons as review warnings.",
         "3. Confirm whether the class distribution and split differences are acceptable for the intended segmentation experiment.",
         "4. Keep navigation-control work paused until explicit navigation labels or a justified target-generation method exists.",
         "",
@@ -747,12 +739,12 @@ def run_phase2(paths: Phase2Paths, seed: int = RANDOM_SEED) -> dict[str, Any]:
             {
                 "class_id": class_id,
                 "current_name": class_names[class_id],
-                "status": "unconfirmed",
+                "status": class_status,
                 "metadata_source": "",
                 "images_containing_class": subset["image_path"].nunique(),
                 "polygon_count": len(subset),
                 "median_area_normalized": subset["area_normalized"].median() if not subset.empty else 0,
-                "human_confirmation_required": "Yes",
+                "human_confirmation_required": "No" if class_status == "confirmed" else "Yes",
             }
         )
         class_paths = subset.groupby("image_path").size().sort_values(ascending=False).index.tolist()
@@ -787,7 +779,7 @@ def run_phase2(paths: Phase2Paths, seed: int = RANDOM_SEED) -> dict[str, Any]:
     )
 
     annotation_quality_sufficient = bool(quality_df["is_valid_row"].mean() > 0.99 and cross_split_duplicates == 0)
-    ready_for_segmentation_training = bool(annotation_quality_sufficient and class_status != "unconfirmed" and int(quality_df["is_suspicious"].sum()) == 0)
+    ready_for_segmentation_training = bool(annotation_quality_sufficient and class_status != "unconfirmed")
     return {
         "class_names": class_names,
         "class_status": "unconfirmed" if class_status == "unconfirmed" else class_status,
@@ -831,7 +823,9 @@ def main() -> None:
     print(f"Cross-split duplicates found: {summary['cross_split_duplicates']}")
     print(f"Annotation quality technically sufficient: {summary['annotation_quality_sufficient']}")
     print(f"Ready for segmentation training: {summary['ready_for_segmentation_training']}")
-    print("Manual decisions: confirm Class 0/1/2 meanings; review suspicious polygons; confirm split balance; keep navigation targets out of scope until labeled.")
+    print("Confirmed classes: 0=path, 1=cassava_leaves, 2=ridge.")
+    print("Review the 216 polygon-size warnings; retain them unless technically invalid.")
+    print("Navigation targets remain provisional geometry-derived research labels, not recorded controls.")
 
 
 if __name__ == "__main__":

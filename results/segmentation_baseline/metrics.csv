@@ -1,0 +1,3 @@
+status,model,split,mask_precision,mask_recall,mask_map50,mask_map50_95,box_precision,box_recall,box_map50,box_map50_95,best_epoch,inference_ms,fps,model_size_mb,parameter_count
+not_trained,yolo11n-seg.pt,valid,,,,,,,,,,,,,
+not_trained,yolo11n-seg.pt,test,,,,,,,,,,,,,

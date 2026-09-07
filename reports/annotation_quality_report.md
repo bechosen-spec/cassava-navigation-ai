@@ -96,27 +96,13 @@ The classes are human-confirmed and the dataset is technically usable. Retain 19
 ## Exclusion recommendations
 Exclude hidden/system artifacts from every analysis and training manifest. Review rows in `reports/polygon_quality_checks.csv` where `is_suspicious` is true before deciding whether to exclude individual polygons or images.
 
-## Manual confirmation section
+## Human-confirmed semantics
 
-Class 0:
-Observed visual content:
-Proposed meaning:
-Confidence:
-Human confirmation required: No (confirmed by project owner)
+- Class 0: path (confirmed by project owner)
+- Class 1: cassava_leaves (confirmed by project owner)
+- Class 2: ridge (confirmed by project owner)
 
-Class 1:
-Observed visual content:
-Proposed meaning:
-Confidence:
-Human confirmation required: No (confirmed by project owner)
-
-Class 2:
-Observed visual content:
-Proposed meaning:
-Confidence:
-Human confirmation required: No (confirmed by project owner)
-
-## Decisions required before training
+## Preserved decisions
 1. Preserve the human-confirmed class mapping.
 2. Retain suspicious polygons unless technically invalid.
 3. Confirm whether the class distribution and split differences are acceptable for the intended segmentation experiment.

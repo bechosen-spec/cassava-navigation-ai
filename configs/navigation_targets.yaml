@@ -1,0 +1,12 @@
+status: provisional
+seed: 42
+lower_roi_start: 0.65
+left_threshold: -0.15
+right_threshold: 0.15
+minimum_path_area_ratio: 0.02
+minimum_valid_path_width: 0.10
+minimum_path_continuity: 0.60
+stop_uncertain_threshold: 0.60
+smoothing:
+  enabled: false
+  reason: No validated temporal sequence identifiers

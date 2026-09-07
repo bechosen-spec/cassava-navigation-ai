@@ -1,0 +1,8 @@
+path: data/processed/segmentation_dataset
+train: train.txt
+val: valid.txt
+test: test.txt
+names:
+  0: path
+  1: cassava_leaves
+  2: ridge

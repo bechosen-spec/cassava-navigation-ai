@@ -1652,9 +1652,9 @@ extracted/
 ## Class distribution
 |   class_id | class_name   |   annotation_count |   image_count |
 |-----------:|:-------------|-------------------:|--------------:|
-|          0 | Class 0      |               5301 |           787 |
-|          1 | Class 1      |               4494 |           792 |
-|          2 | Class 2      |              18860 |           801 |
+|          0 | path           |               5301 |           787 |
+|          1 | cassava_leaves |               4494 |           792 |
+|          2 | ridge          |              18860 |           801 |
 
 ## Image properties
 | property        |   count |   min |    max |   mean |   median |     std |

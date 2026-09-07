@@ -12,6 +12,8 @@ venv/
 *.pt
 *.pth
 *.onnx
+!models/segmentation_baseline/best.pt
+!models/segmentation_baseline/last.pt
 *.zip
 *.tar
 *.tar.gz
@@ -38,3 +40,6 @@ data/processed/*
 !data/raw/.gitkeep
 !data/extracted/.gitkeep
 !data/processed/.gitkeep
+
+!data/processed/*.csv
+results/segmentation_baseline/runtime_dataset.yaml

@@ -1,0 +1,7 @@
+status,split,class_id,class_name,mask_precision,mask_recall,mask_map50,mask_map50_95
+not_trained,valid,0,path,,,,
+not_trained,valid,1,cassava_leaves,,,,
+not_trained,valid,2,ridge,,,,
+not_trained,test,0,path,,,,
+not_trained,test,1,cassava_leaves,,,,
+not_trained,test,2,ridge,,,,
