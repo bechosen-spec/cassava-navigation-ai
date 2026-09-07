@@ -50,7 +50,15 @@ with zipfile.ZipFile(archive,'w') as z:
     z.writestr('data/images/train/.ipynb_checkpoints/duplicate.jpg',b'ignored')
 info=safe_extract(archive,project/'data/extracted',10000000)
 assert info['ignored_archive_members']==1
-root=discover_root(project/'data/extracted');mf=validate_dataset(root,project,info)
+# Reproduce an uploaded full-project ZIP that also contains a generated dataset root.
+import shutil
+raw_root=project/'data/extracted/data'
+derived=project/'data/extracted/data/processed/segmentation_dataset'
+shutil.copytree(raw_root/'images',derived/'images')
+shutil.copytree(raw_root/'labels',derived/'labels')
+root=discover_root(project/'data/extracted')
+assert root==raw_root, (root,raw_root)
+mf=validate_dataset(root,project,info)
 assert mf.groupby('split').size().to_dict()=={'train':2,'valid':2,'test':2}
 quality=pd.read_csv(project/'reports/phaseA_pretraining_quality_check.csv')
 assert (quality.issue=='extremely_small_polygon').sum()==6
@@ -71,9 +79,16 @@ from navigation.target_generation import generate
 cfg=dict(smoothing={'enabled':False},minimum_path_area_ratio=.02,minimum_valid_path_width=.1,minimum_path_continuity=.6,stop_uncertain_threshold=.6,left_threshold=-.15,right_threshold=.15)
 t=generate(pd.DataFrame([dict(image_id='empty',split='train',image_width=64,**empty)]),cfg)
 assert t.iloc[0].discrete_target=='stop_or_uncertain' and np.isnan(t.iloc[0].continuous_target)
+# Metric parsing itself does not need plotting; stub pyplot to keep this local check fast.
+import types
+fake_matplotlib=types.ModuleType('matplotlib')
+fake_pyplot=types.ModuleType('matplotlib.pyplot')
+fake_matplotlib.pyplot=fake_pyplot
+sys.modules['matplotlib']=fake_matplotlib
+sys.modules['matplotlib.pyplot']=fake_pyplot
 from phase_a_segmentation import metric_values
 class FakeMetrics:
     results_dict={'metrics/precision(M)':.75,'metrics/recall(M)':.5,'metrics/mAP50(M)':.6}
 values=metric_values(FakeMetrics(),'mask')
 assert values['mask_precision']==.75 and np.isnan(values['mask_map50_95'])
-print(json.dumps(dict(status='passed',cells=len(nb.cells),code_cells=sum(c.cell_type=='code' for c in nb.cells),embedded_modules=len(helper_sources),checks=['nbformat schema','all Python cells compile','all embedded modules compile','no local Mac paths','ZIP traversal rejected','arbitrary ZIP filename','val alias','hidden artifacts ignored','size warnings retained','technical row excluded only in derived copy','original labels unchanged','feature metadata retained','union overlap safe','missing path is uncertain/NaN','metric API fallback preserves missingness'],gpu_training_executed=False),indent=2))
+print(json.dumps(dict(status='passed',cells=len(nb.cells),code_cells=sum(c.cell_type=='code' for c in nb.cells),embedded_modules=len(helper_sources),checks=['nbformat schema','all Python cells compile','all embedded modules compile','no local Mac paths','ZIP traversal rejected','arbitrary ZIP filename','val alias','generated YOLO root ignored','hidden artifacts ignored','size warnings retained','technical row excluded only in derived copy','original labels unchanged','feature metadata retained','union overlap safe','missing path is uncertain/NaN','metric API fallback preserves missingness'],gpu_training_executed=False),indent=2))

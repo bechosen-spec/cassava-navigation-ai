@@ -192,7 +192,7 @@ Open **[notebooks/03_phase_A_colab.ipynb](notebooks/03_phase_A_colab.ipynb)** in
 1. Go to [Google Colab](https://colab.research.google.com/), choose **File > Upload notebook**, and select `03_phase_A_colab.ipynb`.
 2. Choose **Runtime > Change runtime type > GPU**.
 3. Edit the settings at the top if needed. Defaults are seed 42, image size 640, 60 epochs, batch 8, patience 12 and two workers.
-4. Choose `INPUT_METHOD = 'upload'` and upload one dataset ZIP when prompted, or choose `'drive'` and set `ZIP_PATH` to your ZIP in Google Drive. Any ZIP filename is supported; the dataset root and `valid`/`val` split are discovered automatically.
+4. Choose `INPUT_METHOD = 'upload'` and upload one dataset ZIP when prompted, or choose `'drive'` and set `ZIP_PATH` to your ZIP in Google Drive. Any ZIP filename is supported; the dataset root and `valid`/`val` split are discovered automatically. If a full project ZIP also contains `data/processed/segmentation_dataset`, that generated copy is ignored in favor of the single original source root.
 5. Choose **Runtime > Run all**. Dependency installation, validation, one segmentation training run, evaluation, predictions, feature extraction, provisional targets, reports and packaging run in order.
 6. Download `cassava_navigation_phase_A_results.zip` from the final cell. Separately choose **File > Download > Download .ipynb** to save the executed notebook with outputs. Return **both files** for review.
 

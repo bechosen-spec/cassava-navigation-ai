@@ -11,9 +11,10 @@ Passed checks:
 - Notebook JSON and nbformat schema validation.
 - Python compilation of every code cell and all five embedded modules.
 - No local Mac paths in Colab code.
-- Temporary synthetic-fixture checks for ZIP traversal rejection, arbitrary ZIP filenames, `val` discovery and ignored checkpoint artifacts.
+- Temporary synthetic-fixture checks for ZIP traversal rejection, arbitrary ZIP filenames, `val` discovery, generated-root exclusion, and ignored checkpoint artifacts.
 - Small/large polygons retained; invalid class rows excluded only from derived copies; original labels unchanged.
 - Feature metadata retained; overlapping polygons union correctly; absent path centres remain NaN with missing flags and yield `stop_or_uncertain`.
+- Full-project ZIPs containing both original data and `data/processed/segmentation_dataset` select the original source root and report the ignored generated root.
 - Metric extraction accepts raw API dictionaries and preserves unavailable fields as NaN.
 
 Reproduce these checks (no model training):
