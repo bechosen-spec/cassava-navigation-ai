@@ -98,6 +98,14 @@ Training data fits models and preprocessing. Validation data supports selection 
 
 ## Current Project Status
 
+### Phase B results validation and research-figure package — completed review
+
+The supplied executed Phase B notebook and results archive have now been independently reviewed. The archive supports classical oracle-feature modelling, ANFIS oracle-feature regression, and image-based custom CNN, MobileNetV3, and ResNet18 regression. The segmentation baseline is explicitly `not_trained` in the stored metrics, so it is not presented as a completed segmentation experiment.
+
+The reproducible figure package contains 33 evidence-backed figures and an index for all 40 requested figure slots. Seven slots are intentionally marked as requiring additional evaluation because no segmentation training/prediction outputs or ANFIS recovery metadata were supplied. See [the figure index](research_figures/figure_index.csv), [validation report](reports/phase_B_results_validation.md), [figure explanations](reports/RESEARCH_FIGURES_EXPLANATION.md), and [contributor allocation](reports/FIGURE_WORK_ALLOCATION.md). The downloadable package is `cassava_navigation_research_figures.zip`.
+
+Key limitation: Phase B tabular/ANFIS results use oracle ground-truth-mask features; only the CNN/transfer models are image-based. All navigation labels remain geometry-derived research labels rather than measured steering commands or robot-control outputs.
+
 ### Completed — Phase 1: Dataset Audit
 
 Phase 1 inspected the archive/folder structure, identified YOLO polygons, counted and matched image/label files, measured image and polygon properties, checked missing/corrupt files and duplicate hashes, and created reports and figures.

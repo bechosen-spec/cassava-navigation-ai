@@ -1,18 +1,18 @@
 # Project Status
 
-Last reviewed: 2026-09-21
+Last reviewed: 2026-09-22
 
 ## Milestones
 
 - [x] Phase 1 — Dataset audit and validation
 - [x] Phase 2 — Class and annotation-quality validation
 - [x] Phase A — Segmentation, features and navigation-target workflow prepared
-- [ ] Phase B — Model Training and Evaluation
+- [x] Phase B — Initial model training/export and independent results validation
 - [ ] Phase C — Comparative/statistical analysis and paper-ready results
 
 ## Current Phase
 
-Phase B preparation repaired — awaiting Colab rerun. The initial Colab run trained no models because its loader searched for `navigation_targets.csv` instead of the packaged task-specific target tables. The corrected workflow loads those tables directly and blocks an empty results export.
+Phase B results reviewed from the supplied executed notebook and results ZIP. Classical oracle-feature models, ANFIS oracle-feature regression, and three image-regression models exported predictions; 33 evidence-backed research figures were generated. The segmentation baseline remains not trained.
 
 ## Verified Dataset and Outputs
 
@@ -26,7 +26,7 @@ Phase B preparation repaired — awaiting Colab rerun. The initial Colab run tra
 - Manual review: 278 images.
 - Exact cross-split duplicate hashes: 0.
 - Ground-truth feature data: 802 rows and 412 total columns.
-- Trained segmentation metrics/checkpoints: N/A in this checkout.
+- Segmentation metrics/checkpoints: baseline records `not_trained`; no predictions or epoch logs were supplied.
 - Predicted-mask features: absent; the Phase B package does not fabricate a substitute.
 - Navigation targets: rebuilt reproducibly from the committed ground-truth feature table and committed geometry rules for dataset preparation; they remain provisional geometry-derived labels.
 
@@ -44,9 +44,9 @@ Approximate externally reported Phase A values are not promoted to verified metr
 
 ## Next Action
 
-1. Upload `cassava_navigation_phase_B_dataset.zip` into `notebooks/04_phase_B_colab.ipynb` in a GPU Colab runtime.
-2. Complete the validation-only model selection and final held-out test evaluation.
-3. Return the results ZIP and executed notebook for Phase C review.
+1. Use `notebooks/05_phase_B_figures_recovery_colab.ipynb` only to recover missing segmentation predictions/logs or ANFIS visualization metadata from original checkpoints.
+2. Run Phase C comparative/statistical analysis only after resolving comparability gaps and documenting timing conditions.
+3. Preserve the oracle-versus-image feature distinction in all research writing.
 
 Phase B must preserve splits, make all choices on train/validation only, separate oracle from deployable features, and audit target leakage.
 
