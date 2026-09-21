@@ -1,18 +1,18 @@
 # Project Status
 
-Last reviewed: 2026-09-07
+Last reviewed: 2026-09-21
 
 ## Milestones
 
 - [x] Phase 1 — Dataset audit and validation
 - [x] Phase 2 — Class and annotation-quality validation
-- [~] Phase A — Workflow and ground-truth features prepared; executed GPU artifacts awaiting import and verification
-- [ ] Phase B — Classical ML, ANFIS, and deep-learning navigation prediction
+- [x] Phase A — Segmentation, features and navigation-target workflow prepared
+- [ ] Phase B — Model Training and Evaluation
 - [ ] Phase C — Comparative/statistical analysis and paper-ready results
 
 ## Current Phase
 
-Phase A artifact reconciliation. The self-contained GPU notebook exists and an external run has been reported, but this checkout contains only ground-truth features and explicit `not_trained` segmentation status files. It has no trained checkpoints, predicted-mask features, navigation targets, or executed metric outputs.
+Phase B preparation complete — awaiting Colab execution. The upload-ready dataset and notebook are prepared, but no Phase B model has been trained locally or marked complete.
 
 ## Verified Dataset and Outputs
 
@@ -27,7 +27,8 @@ Phase A artifact reconciliation. The self-contained GPU notebook exists and an e
 - Exact cross-split duplicate hashes: 0.
 - Ground-truth feature data: 802 rows and 412 total columns.
 - Trained segmentation metrics/checkpoints: N/A in this checkout.
-- Predicted-mask features and navigation targets: absent.
+- Predicted-mask features: absent; the Phase B package does not fabricate a substitute.
+- Navigation targets: rebuilt reproducibly from the committed ground-truth feature table and committed geometry rules for dataset preparation; they remain provisional geometry-derived labels.
 
 Approximate externally reported Phase A values are not promoted to verified metrics until their executed CSVs and checkpoints are imported.
 
@@ -43,10 +44,9 @@ Approximate externally reported Phase A values are not promoted to verified metr
 
 ## Next Action
 
-1. Import the executed `03_phase_A_colab.ipynb` and `cassava_navigation_phase_A_results.zip`.
-2. Verify their inventories, checksums, checkpoints, metrics, figures, IDs, rows, and splits.
-3. Replace local `not_trained` status artifacts only with verified executed outputs.
-4. Start **Phase B — Classical ML + ANFIS + CNN/Transfer Learning** in a future `notebooks/04_phase_B_colab.ipynb`.
+1. Upload `cassava_navigation_phase_B_dataset.zip` into `notebooks/04_phase_B_colab.ipynb` in a GPU Colab runtime.
+2. Complete the validation-only model selection and final held-out test evaluation.
+3. Return the results ZIP and executed notebook for Phase C review.
 
 Phase B must preserve splits, make all choices on train/validation only, separate oracle from deployable features, and audit target leakage.
 

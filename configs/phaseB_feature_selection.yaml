@@ -1,0 +1,61 @@
+version: 1
+seed: 42
+continuous_target: normalized_path_offset
+primary_directional_labels: [left, forward, right]
+feature_sources:
+  ground_truth: data/processed/features_ground_truth.csv
+  predicted_masks: data/processed/features_predicted_masks.csv
+leakage_exclusions:
+  - normalized_path_offset
+  - normalized_path_offset_missing
+  - path_center_x
+  - path_center_x_missing
+  - absolute_path_deviation
+  - absolute_path_deviation_missing
+  - path_left_boundary
+  - path_left_boundary_missing
+  - path_right_boundary
+  - path_right_boundary_missing
+  - path_width_lower
+  - path_width_lower_missing
+  - path_area_ratio
+  - path_area_ratio_missing
+  - path_continuity
+  - path_continuity_missing
+  - missing_path
+  - missing_path_missing
+reasons:
+  normalized_path_offset: "Primary continuous target; direct identity leakage."
+  path_center_x: "Directly defines normalized_path_offset with image width."
+  absolute_path_deviation: "Absolute value of the target-derived offset."
+  path_left_boundary: "Participates in calculating the path centre."
+  path_right_boundary: "Participates in calculating the path centre."
+notes:
+  - "The Colab notebook validates this initial policy against feature_dictionary.csv when supplied."
+  - "Allowed columns are discovered at runtime after exclusions and identifier/split removal."
+  - "Path width, area, continuity and missing_path determine target validity and stop_or_uncertain; exclude them from primary experiments to avoid rule reconstruction."
+approved_regression_features:
+  - cassava_imbalance
+  - ridge_imbalance
+  - ridge_orientation
+  - cassava_lower_obstruction
+  - edge_density
+  - texture_entropy
+approved_classification_features:
+  - cassava_imbalance
+  - ridge_imbalance
+  - ridge_orientation
+  - cassava_lower_obstruction
+  - edge_density
+  - texture_entropy
+recommended_compact_anfis_features:
+  - cassava_imbalance
+  - ridge_imbalance
+  - ridge_orientation
+  - cassava_lower_obstruction
+  - edge_density
+feature_groups:
+  cassava: [cassava_coverage, cassava_left_coverage, cassava_right_coverage, cassava_imbalance, cassava_lower_obstruction, cassava_density]
+  ridge: [ridge_coverage, ridge_left_coverage, ridge_right_coverage, ridge_imbalance, ridge_orientation, ridge_proximity_to_path, ridge_path_overlap, ridge_path_centroid_distance]
+  colour_texture: [rgb_0_mean, rgb_1_mean, rgb_2_mean, hsv_0_mean, hsv_1_mean, hsv_2_mean, excess_green, excess_red, normalized_green_red, glcm_contrast, glcm_correlation, glcm_energy, glcm_homogeneity, texture_entropy, edge_density]
+  compact: [cassava_imbalance, ridge_imbalance, ridge_orientation, cassava_lower_obstruction, edge_density]

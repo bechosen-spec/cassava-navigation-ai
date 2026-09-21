@@ -208,6 +208,10 @@ Predicted training masks from the same segmentation model fitted on those images
 
 ### Phase B — Classical ML, ANFIS, and Deep Learning
 
+Phase B preparation is complete. [`cassava_navigation_phase_B_dataset.zip`](cassava_navigation_phase_B_dataset.zip) is a single-upload package containing all 802 original-split images, image/target manifests, regression and three-class classification tables, ground-truth-mask (oracle) features, configurations and leakage-selection metadata. The committed target source was rebuilt from the verified ground-truth feature table using the committed geometry rules because an executed target artifact was unavailable. It is still a derived research target, never a physical steering command.
+
+[`notebooks/04_phase_B_colab.ipynb`](notebooks/04_phase_B_colab.ipynb) is the Colab workflow for classical models, ANFIS, a custom CNN, MobileNetV3 and ResNet18. It writes a separately downloadable `cassava_navigation_phase_B_results.zip`. See [`PHASE_B_COLAB_GUIDE.md`](PHASE_B_COLAB_GUIDE.md) for the run sequence. It keeps oracle features separate from predicted-mask/deployment experiments and excludes direct offset, path-centre, and target-validity-rule proxies. Predicted-mask features are not included until the missing executed Phase A table is supplied; they are not replaced with oracle data.
+
 Classical regression should compare Random Forest, XGBoost, SVR, and KNN with a simple baseline. The primary endpoint is valid continuous-offset prediction; report MAE, RMSE, and R².
 
 Secondary classification may compare Random Forest, XGBoost, SVM, KNN, and Logistic Regression/Decision Tree. Use valid `left`/`forward`/`right` rows. Keep `stop_or_uncertain` separate unless its meaning and imbalance treatment are defensible. Report accuracy, balanced accuracy, macro precision/recall/F1, Cohen's kappa, MCC, and confusion matrices.
