@@ -212,6 +212,8 @@ Phase B preparation is complete. [`cassava_navigation_phase_B_dataset.zip`](cass
 
 [`notebooks/04_phase_B_colab.ipynb`](notebooks/04_phase_B_colab.ipynb) is the Colab workflow for classical models, ANFIS, a custom CNN, MobileNetV3 and ResNet18. It writes a separately downloadable `cassava_navigation_phase_B_results.zip`. See [`PHASE_B_COLAB_GUIDE.md`](PHASE_B_COLAB_GUIDE.md) for the run sequence. It keeps oracle features separate from predicted-mask/deployment experiments and excludes direct offset, path-centre, and target-validity-rule proxies. Predicted-mask features are not included until the missing executed Phase A table is supplied; they are not replaced with oracle data.
 
+The first notebook execution did not train models: it looked for the absent original Phase A `navigation_targets.csv` rather than the ZIP's `tabular/regression_targets.csv` and `tabular/classification_targets.csv`. The repaired notebook now discovers the packaged root automatically, validates those files and image paths before training, corrects the ResNet18 regression head, and refuses to export a results ZIP when no model metrics exist.
+
 Classical regression should compare Random Forest, XGBoost, SVR, and KNN with a simple baseline. The primary endpoint is valid continuous-offset prediction; report MAE, RMSE, and R².
 
 Secondary classification may compare Random Forest, XGBoost, SVM, KNN, and Logistic Regression/Decision Tree. Use valid `left`/`forward`/`right` rows. Keep `stop_or_uncertain` separate unless its meaning and imbalance treatment are defensible. Report accuracy, balanced accuracy, macro precision/recall/F1, Cohen's kappa, MCC, and confusion matrices.

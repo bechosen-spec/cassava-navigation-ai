@@ -12,7 +12,7 @@ Last reviewed: 2026-09-21
 
 ## Current Phase
 
-Phase B preparation complete — awaiting Colab execution. The upload-ready dataset and notebook are prepared, but no Phase B model has been trained locally or marked complete.
+Phase B preparation repaired — awaiting Colab rerun. The initial Colab run trained no models because its loader searched for `navigation_targets.csv` instead of the packaged task-specific target tables. The corrected workflow loads those tables directly and blocks an empty results export.
 
 ## Verified Dataset and Outputs
 
