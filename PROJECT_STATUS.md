@@ -12,7 +12,7 @@ Last reviewed: 2026-09-22
 
 ## Current Phase
 
-Phase B results reviewed from the supplied executed notebook and results ZIP. Classical oracle-feature models, ANFIS oracle-feature regression, and three image-regression models exported predictions; 33 evidence-backed research figures were generated. The segmentation baseline remains not trained.
+Phase B results reviewed from the supplied executed notebook and results ZIP. Classical oracle-feature models, ANFIS oracle-feature regression, and three image-regression models exported predictions; 33 evidence-backed research figures are present. The recovery-first Colab workflow adds 16 further prediction/metric diagnostics from the same saved exports (49 canonical figures after execution). The segmentation baseline remains not trained.
 
 ## Verified Dataset and Outputs
 
