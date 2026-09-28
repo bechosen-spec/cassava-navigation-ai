@@ -1,0 +1,6 @@
+model,original_test_n,common_test_n,excluded_n,excluded_ids,reason
+Random Forest,42,42,0,,none
+ANFIS,42,42,0,,none
+Custom CNN,42,42,0,,none
+MobileNetV3,42,42,0,,none
+ResNet18,42,42,0,,none

@@ -98,6 +98,12 @@ Training data fits models and preprocessing. Validation data supports selection 
 
 ## Current Project Status
 
+### Phase C - completed comparative validation and documentation
+
+Phase C validates the frozen Phase B prediction exports locally without retraining. It recomputes regression metrics from raw per-image values, corrects classification metrics from hard labels, aligns Random Forest, ANFIS, Custom CNN, MobileNetV3 and ResNet18 on the same 42 test images, calculates reproducible 95% bootstrap intervals (5,000 repeats), and uses paired Wilcoxon tests with Holm correction. Start with [the Phase C notebook](notebooks/06_phase_C_comparative_analysis.ipynb), [technical report](reports/COMPLETE_RESEARCH_TECHNICAL_REPORT.md), [validated tables](phase_C_results/tables/), [statistical comparisons](phase_C_results/statistics/statistical_comparisons.csv), [figure index](phase_C_results/figure_index.csv), and [reproducibility guide](reports/REPRODUCIBILITY_GUIDE.md).
+
+The validated common-test result is deliberately qualified: Random Forest is numerically lowest on this saved export, but it consumes oracle ground-truth-mask features and is not deployment-equivalent to the image-only models. Among the saved image-only models, MobileNetV3 has the lowest MAE. No trained local segmentation run, predicted-mask downstream study, measured steering labels or physical robot validation is claimed.
+
 ### Phase B results validation and research-figure package — completed review
 
 The supplied executed Phase B notebook and results archive have now been independently reviewed. The archive supports classical oracle-feature modelling, ANFIS oracle-feature regression, and image-based custom CNN, MobileNetV3, and ResNet18 regression. The segmentation baseline is explicitly `not_trained` in the stored metrics, so it is not presented as a completed segmentation experiment.

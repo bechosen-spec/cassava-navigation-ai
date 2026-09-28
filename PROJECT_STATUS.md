@@ -8,11 +8,11 @@ Last reviewed: 2026-09-22
 - [x] Phase 2 — Class and annotation-quality validation
 - [x] Phase A — Segmentation, features and navigation-target workflow prepared
 - [x] Phase B — Initial model training/export and independent results validation
-- [ ] Phase C — Comparative/statistical analysis and paper-ready results
+- [x] Phase C — Comparative/statistical analysis and comprehensive technical documentation
 
 ## Current Phase
 
-Phase B results reviewed from the supplied executed notebook and results ZIP. Classical oracle-feature models, ANFIS oracle-feature regression, and three image-regression models exported predictions; 33 evidence-backed research figures are present. The recovery-first Colab workflow adds 16 further prediction/metric diagnostics from the same saved exports (49 canonical figures after execution). The segmentation baseline remains not trained.
+Phase C is complete for the supplied frozen evidence. It independently validates saved regression predictions, corrects classification metrics from hard labels, aligns all five regression families on a 42-image common test set, computes 5,000-repeat bootstrap intervals, performs paired Wilcoxon tests with Holm correction, creates high-resolution figures/tables, and produces the complete technical-report package. The segmentation baseline remains not trained.
 
 ## Verified Dataset and Outputs
 
@@ -42,11 +42,17 @@ Approximate externally reported Phase A values are not promoted to verified metr
 - Exact hashes do not rule out temporal/site correlation.
 - Camera/controller calibration and physical safety validation are unavailable.
 
+## Phase C Deliverables
+
+- `notebooks/06_phase_C_comparative_analysis.ipynb`
+- `src/phase_C_analysis.py`, `src/phase_C_statistics.py`, `src/phase_C_visualization.py`
+- `phase_C_results/` validated metrics, corrected classification metrics, manifests, statistics, figures and indexes
+- `reports/COMPLETE_RESEARCH_TECHNICAL_REPORT.md` plus DOCX/PDF
+- `reports/PROJECT_EXPLAINED_SIMPLY.md`, objective traceability, figure/table catalogues and reproducibility guide
+
 ## Next Action
 
-1. Use `notebooks/05_phase_B_figures_recovery_colab.ipynb` only to recover missing segmentation predictions/logs or ANFIS visualization metadata from original checkpoints.
-2. Run Phase C comparative/statistical analysis only after resolving comparability gaps and documenting timing conditions.
-3. Preserve the oracle-versus-image feature distinction in all research writing.
+Prepare a manuscript using the Phase C report, retaining all stated evidence boundaries. Import a genuine trained-segmentation/predicted-mask package only if a deployment-oriented downstream comparison is required.
 
 Phase B must preserve splits, make all choices on train/validation only, separate oracle from deployable features, and audit target leakage.
 
