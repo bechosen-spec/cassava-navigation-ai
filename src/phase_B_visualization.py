@@ -38,6 +38,9 @@ def _save(fig, path):
     fig.tight_layout()
     fig.savefig(path.with_suffix(".png"), dpi=300, bbox_inches="tight")
     fig.savefig(path.with_suffix(".pdf"), bbox_inches="tight")
+    # Deliberately display every generated figure in Colab as well as exporting it.
+    # The notebook is intended to be a visual analysis record, not merely a ZIP creator.
+    plt.show()
     plt.close(fig)
     return path.with_suffix(".png")
 
@@ -152,6 +155,45 @@ def generate_recovery_figures(results_root, output_root=None):
     _style(ax,"Paired absolute-error difference: RF minus MobileNetV3","|RF error| − |MobileNetV3 error|","Common test images")
     p=_save(fig,output_root/"phase_B/overall_model_comparison/figure_56_paired_rf_mobilenet_error_difference")
     entries.append(_entry(56,"Paired RF versus MobileNetV3 absolute-error difference","Overall model comparison","classical_ml and deep_learning saved predictions",len(paired),p.relative_to(output_root),"Each bar compares errors on a common saved image ID.","RF uses oracle features while MobileNetV3 uses images; this is diagnostic, not a deployability ranking."))
+    # Model-specific residual diagnostics. These are not cosmetic variants: each
+    # answers a separate error-analysis question (tail risk, agreement/bias,
+    # ordered worst cases, and error conditional on target magnitude).
+    diagnostic_models = {
+        "rf_oracle": rf[["image_id", "actual", "prediction"]],
+        "anfis_oracle": pd.read_csv(aroot / "predictions.csv"),
+        **deep_frames,
+    }
+    for offset, (model, frame) in enumerate(diagnostic_models.items()):
+        frame = frame.copy(); frame.prediction = frame.prediction.map(_prediction_number)
+        error = frame.prediction - frame.actual; absolute = abs(error); base = 57 + offset * 4
+        label = model.replace("_", " ").title(); folder = "overall_model_comparison/model_diagnostics"
+        # ECDF makes tail-error probability directly readable without assuming normality.
+        values = np.sort(absolute.to_numpy()); y = np.arange(1, len(values) + 1) / len(values)
+        fig, ax = plt.subplots(figsize=(6.5, 4.5)); ax.step(values, y, where="post", color="#1769aa", lw=2)
+        _style(ax, f"{label}: empirical CDF of absolute error (n={len(frame)})", "Absolute prediction error", "Cumulative proportion of test samples")
+        p = _save(fig, output_root / f"phase_B/{folder}/figure_{base}_{model}_absolute_error_ecdf")
+        entries.append(_entry(base, f"{label} absolute-error empirical CDF", "Model error analysis", f"saved predictions for {model}", len(frame), p.relative_to(output_root), "The curve reports the proportion of test samples at or below each absolute error.", "Single saved test run; targets are geometry-derived."))
+        # Bland--Altman plot tests signed agreement/bias across the target range.
+        mean = (frame.actual + frame.prediction) / 2; bias = error.mean(); spread = error.std(ddof=1) if len(error) > 1 else 0
+        fig, ax = plt.subplots(figsize=(6.5, 4.5)); ax.scatter(mean, error, s=28, alpha=.8, color="#59a14f"); ax.axhline(bias, color="#c62828", label=f"Mean bias={bias:.3f}")
+        ax.axhline(bias + 1.96 * spread, color="#666", ls="--", label="Approx. 95% limits"); ax.axhline(bias - 1.96 * spread, color="#666", ls="--")
+        _style(ax, f"{label}: Bland–Altman agreement plot (n={len(frame)})", "Mean of actual and predicted offset", "Prediction − actual offset"); ax.legend(fontsize=8)
+        p = _save(fig, output_root / f"phase_B/{folder}/figure_{base+1}_{model}_bland_altman")
+        entries.append(_entry(base+1, f"{label} Bland–Altman agreement plot", "Model error analysis", f"saved predictions for {model}", len(frame), p.relative_to(output_root), "Signed agreement and mean bias are visible across the observed offset range.", "Approximate limits are descriptive, not repeated-run confidence intervals."))
+        # Ranking shows which individual samples dominate the aggregate error.
+        ordered = np.sort(absolute.to_numpy())[::-1]
+        fig, ax = plt.subplots(figsize=(6.5, 4.5)); ax.plot(np.arange(1, len(ordered)+1), ordered, marker="o", ms=3, color="#f28e2b")
+        _style(ax, f"{label}: ranked absolute test errors (n={len(frame)})", "Test sample rank (largest error first)", "Absolute prediction error")
+        p = _save(fig, output_root / f"phase_B/{folder}/figure_{base+2}_{model}_ranked_absolute_error")
+        entries.append(_entry(base+2, f"{label} ranked absolute test errors", "Model error analysis", f"saved predictions for {model}", len(frame), p.relative_to(output_root), "Ordered errors identify the observations driving aggregate error.", "Image-level causes require review against the original images."))
+        # Error-by-magnitude bins exposes non-linearity while retaining sample counts.
+        bins = pd.qcut(abs(frame.actual), q=min(4, len(frame)), duplicates="drop")
+        grouped = pd.DataFrame({"bin": bins, "absolute_error": absolute}).groupby("bin", observed=False).absolute_error
+        fig, ax = plt.subplots(figsize=(7, 4.5)); means = grouped.mean(); ax.bar(range(len(means)), means, color="#4c78a8")
+        ax.set_xticks(range(len(means)), [str(v) for v in means.index], rotation=20, ha="right")
+        _style(ax, f"{label}: error by actual-offset magnitude quantile (n={len(frame)})", "|Actual offset| quantile interval", "Mean absolute prediction error")
+        p = _save(fig, output_root / f"phase_B/{folder}/figure_{base+3}_{model}_error_by_offset_quantile")
+        entries.append(_entry(base+3, f"{label} error by actual-offset magnitude quantile", "Model error analysis", f"saved predictions for {model}", len(frame), p.relative_to(output_root), "Mean error is compared across observed target-magnitude quantiles.", "Quantile counts are small and intervals are data-dependent."))
     _append_index(output_root / "figure_index.csv", entries)
     return entries
 
