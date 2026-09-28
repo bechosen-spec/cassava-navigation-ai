@@ -104,6 +104,10 @@ Phase C validates the frozen Phase B prediction exports locally without retraini
 
 The validated common-test result is deliberately qualified: Random Forest is numerically lowest on this saved export, but it consumes oracle ground-truth-mask features and is not deployment-equivalent to the image-only models. Among the saved image-only models, MobileNetV3 has the lowest MAE. No trained local segmentation run, predicted-mask downstream study, measured steering labels or physical robot validation is claimed.
 
+### Complete technical documentation
+
+The self-contained research document is available as [Markdown](reports/CASSAVA_NAVIGATION_COMPLETE_TECHNICAL_REPORT.md), [DOCX](reports/CASSAVA_NAVIGATION_COMPLETE_TECHNICAL_REPORT.docx), and [PDF](reports/CASSAVA_NAVIGATION_COMPLETE_TECHNICAL_REPORT.pdf). It includes the complete evidence trail from dataset audit through final comparative analysis, 51 indexed figures, 11 indexed tables, an evidence manifest, and an 80-page rendered PDF. The accompanying [completeness audit](reports/TECHNICAL_REPORT_COMPLETENESS_AUDIT.md) records the measurable deliverable scope and evidence constraints.
+
 ### Phase B results validation and research-figure package — completed review
 
 The supplied executed Phase B notebook and results archive have now been independently reviewed. The archive supports classical oracle-feature modelling, ANFIS oracle-feature regression, and image-based custom CNN, MobileNetV3, and ResNet18 regression. The segmentation baseline is explicitly `not_trained` in the stored metrics, so it is not presented as a completed segmentation experiment.

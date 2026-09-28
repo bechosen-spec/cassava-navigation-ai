@@ -1,0 +1,12 @@
+table,title,purpose,source
+1,Dataset characteristics,"Dataset scale, splits, classes and format",reports/dataset_audit_report.md
+2,Annotation validation,"Polygon integrity, warning and review counts",reports/annotation_quality_report.md
+3,Navigation target policy,Thresholds and validity guards,configs/navigation_targets.yaml
+4,Leakage exclusions,Disallowed target-revealing variables,configs/phaseB_feature_selection.yaml
+5,Classical model results,Saved validation/test model summaries,input_results/phase_B_results_original/phaseB/model_summary.csv
+6,Corrected classification metrics,Metrics recomputed from hard labels,phase_C_results/tables/classification_metrics_corrected.csv
+7,ANFIS configuration,"Inputs, membership family/count and rule count",input_results/phase_B_results_original/anfis/configuration.csv
+8,Deep model metrics,"MAE, RMSE, R2, latency, FPS and parameters",input_results/phase_B_results_original/deep_learning/model_metrics.csv
+9,Verified regression results,Independent raw-prediction recomputation,phase_C_results/tables/regression_metrics_verified.csv
+10,Paired statistics,"Wilcoxon tests, CIs and Holm adjustment",phase_C_results/statistics/statistical_comparisons.csv
+11,Bootstrap intervals,"5,000-replicate percentile confidence intervals",phase_C_results/statistics/bootstrap_confidence_intervals.csv

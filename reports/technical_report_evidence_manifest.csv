@@ -1,0 +1,14 @@
+topic,claim/result,source file,source section/column,research stage,figure/table available,verified,notes/limitations
+Dataset size,803 files in original tree; 802 usable labelled samples,reports/dataset_audit_report.md,dataset summary,Dataset audit,dataset figures,yes,One hidden checkpoint image is excluded from usable analysis.
+Split sizes,"602 train, 120 validation, 80 test usable samples",README.md,Dataset statistics,Dataset audit,split distribution,yes,"Original tree reports 603 train images, including excluded artifact."
+Semantic classes,path; cassava_leaves; ridge,configs/classes.yaml,names mapping,Annotation validation,class figures,yes,Human-confirmed mapping.
+Polygon validation,"28,655 valid polygons; 216 warnings; 278 review candidates",reports/annotation_quality_report.md,summary,Annotation validation,annotation figures,yes,"Warnings are review flags, not invalidation."
+Segmentation results,No locally verified trained segmentation metrics,results/segmentation_baseline/metrics.csv,status field,Segmentation,none,yes,Stored baseline status is not_trained; do not use historical approximate values.
+Navigation targets,Geometry-derived offset and directional policy,configs/navigation_targets.yaml,thresholds,Navigation information,target-distribution figures,yes,Not steering/motor labels.
+Feature set,"Oracle ground-truth features, 802 rows / 412 columns",data/processed/features_ground_truth.csv,schema,Feature engineering,feature groups,yes,Predicted-mask features absent.
+Leakage policy,Direct path-centre/offset and validity proxies excluded,configs/phaseB_feature_selection.yaml,leakage_exclusions,Experimental design,configuration table,yes,Policy is marked provisional but used by supplied Phase B workflow.
+Classical regression,RF verified MAE 0.451 RMSE 0.542 R2 0.302,phase_C_results/tables/regression_metrics_verified.csv,Random Forest row,Model evaluation,comparative figures,yes,Oracle ground-truth-mask feature source.
+Directional classification,"Hard-label corrected metrics available for KNN, logistic and SVM",phase_C_results/tables/classification_metrics_corrected.csv,all rows,Model evaluation,confusion matrices,yes,Test sizes 16/32; no probability exports.
+ANFIS configuration,"5 selected features, Gaussian memberships, 3 MF/input, 243 rules",input_results/phase_B_results_original/anfis/configuration.csv,row 1,ANFIS,ANFIS figures,yes,Membership parameters not recoverable.
+Deep models,"Custom CNN, MobileNetV3, ResNet18 image regression metrics",input_results/phase_B_results_original/deep_learning/model_metrics.csv,all rows,Deep learning,history/comparison figures,yes,Timing environment not fully comparable across families.
+Paired statistics,42 common image IDs; Wilcoxon + Holm correction,phase_C_results/statistics/statistical_comparisons.csv,all rows,Comparative analysis,Phase C figures,yes,Paired error difference is not deployment equivalence.

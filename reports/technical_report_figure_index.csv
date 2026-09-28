@@ -1,0 +1,52 @@
+figure,topic,title,path,location
+1,Dataset and annotation,Annotated Samples,figures/annotated_samples.png,Main text
+2,Dataset and annotation,Annotation Area Distribution,figures/annotation_area_distribution.png,Main text
+3,Dataset and annotation,Annotation Count By Class,figures/annotation_count_by_class.png,Main text
+4,Dataset and annotation,Annotation Edge Cases,figures/annotation_edge_cases.png,Main text
+5,Dataset and annotation,Class 0 Review,figures/class_0_review.png,Main text
+6,Dataset and annotation,Class 1 Review,figures/class_1_review.png,Main text
+7,Dataset and annotation,Class 2 Review,figures/class_2_review.png,Main text
+8,Dataset and annotation,Class Imbalance,figures/class_imbalance.png,Main text
+9,Dataset and annotation,Dataset Split Distribution,figures/dataset_split_distribution.png,Main text
+10,Dataset and annotation,Image Aspect Ratio Distribution,figures/image_aspect_ratio_distribution.png,Main text
+11,Dataset and annotation,Image Height Distribution,figures/image_height_distribution.png,Main text
+12,Dataset and annotation,Image Width Distribution,figures/image_width_distribution.png,Appendix
+13,Dataset and annotation,Images Containing Each Class,figures/images_containing_each_class.png,Appendix
+14,Dataset and annotation,Multiclass Review,figures/multiclass_review.png,Appendix
+15,Dataset and annotation,Objects Per Image,figures/objects_per_image.png,Appendix
+16,Segmentation and navigation,Directional Navigation Target Distribution,research_figures/02_segmentation_navigation/figure_13_directional_navigation_target_distribution.png,Appendix
+17,Segmentation and navigation,Continuous Navigation Target Distribution,research_figures/02_segmentation_navigation/figure_14_continuous_navigation_target_distribution.png,Appendix
+18,Classical machine learning,Classical Regression Validation Mae Comparison,research_figures/03_classical_ml/figure_15_classical_regression_validation_mae_comparison.png,Main text
+19,Classical machine learning,Classical Regression Validation Rmse Comparison,research_figures/03_classical_ml/figure_16_classical_regression_validation_rmse_comparison.png,Main text
+20,Classical machine learning,Classical Regression Validation R² Comparison,research_figures/03_classical_ml/figure_17_classical_regression_validation_r²_comparison.png,Main text
+21,Classical machine learning,Classical Rf Actual Versus Predicted Offset,research_figures/03_classical_ml/figure_18_classical_rf_actual_versus_predicted_offset.png,Main text
+22,Classical machine learning,Classical Rf Residual Distribution,research_figures/03_classical_ml/figure_19_classical_rf_residual_distribution.png,Main text
+23,Classical machine learning,Directional Classification Confusion Matrix,research_figures/03_classical_ml/figure_20_directional_classification_confusion_matrix.png,Main text
+24,Classical machine learning,Rf Permutation Feature Importance,research_figures/03_classical_ml/figure_21_rf_permutation_feature_importance.png,Main text
+25,ANFIS,Anfis Recorded Validation Loss Plot,research_figures/04_anfis/figure_22_anfis_recorded_validation_loss_plot.png,Main text
+26,ANFIS,Anfis Actual Versus Predicted Offset,research_figures/04_anfis/figure_24_anfis_actual_versus_predicted_offset.png,Main text
+27,ANFIS,Anfis Residual Distribution,research_figures/04_anfis/figure_25_anfis_residual_distribution.png,Main text
+28,ANFIS,Anfis Absolute Error By Sample,research_figures/04_anfis/figure_26_anfis_absolute_error_by_sample.png,Main text
+29,Image-based deep learning,Custom Cnn Validation Mae Across Epochs,research_figures/05_deep_learning/figure_28_custom_cnn_validation_mae_across_epochs.png,Main text
+30,Image-based deep learning,Mobilenetv3 Validation Mae Across Epochs,research_figures/05_deep_learning/figure_29_mobilenetv3_validation_mae_across_epochs.png,Main text
+31,Image-based deep learning,Resnet18 Validation Mae Across Epochs,research_figures/05_deep_learning/figure_30_resnet18_validation_mae_across_epochs.png,Main text
+32,Image-based deep learning,Deep Learning Mae Comparison,research_figures/05_deep_learning/figure_31_deep_learning_mae_comparison.png,Main text
+33,Image-based deep learning,Deep Learning Rmse Comparison,research_figures/05_deep_learning/figure_32_deep_learning_rmse_comparison.png,Main text
+34,Image-based deep learning,Deep Learning Actual Versus Predicted Offsets,research_figures/05_deep_learning/figure_33_deep_learning_actual_versus_predicted_offsets.png,Main text
+35,Image-based deep learning,Resnet18 Largest Error Real Test Images,research_figures/05_deep_learning/figure_34_resnet18_largest_error_real_test_images.png,Main text
+36,Comparative analysis,Overall Test Mae Comparison,research_figures/06_model_comparison/figure_35_overall_test_mae_comparison.png,Main text
+37,Comparative analysis,Overall Test Rmse Comparison,research_figures/06_model_comparison/figure_36_overall_test_rmse_comparison.png,Main text
+38,Comparative analysis,Overall Test R² Comparison,research_figures/06_model_comparison/figure_37_overall_test_r²_comparison.png,Main text
+39,Comparative analysis,Deep Model Size Versus Prediction Error,research_figures/06_model_comparison/figure_38_deep_model_size_versus_prediction_error.png,Main text
+40,Comparative analysis,Deep Model Latency Versus Prediction Error,research_figures/06_model_comparison/figure_39_deep_model_latency_versus_prediction_error.png,Main text
+41,Comparative analysis,Absolute Error Distribution Across Models,research_figures/06_model_comparison/figure_40_absolute_error_distribution_across_models.png,Main text
+42,Final comparative analysis,Verified Mae,phase_C_results/figures/phase_c_01_verified_mae.png,Main text
+43,Final comparative analysis,Verified Rmse,phase_C_results/figures/phase_c_02_verified_rmse.png,Main text
+44,Final comparative analysis,Verified R2,phase_C_results/figures/phase_c_03_verified_r2.png,Main text
+45,Final comparative analysis,Mae Bootstrap Ci,phase_C_results/figures/phase_c_04_mae_bootstrap_ci.png,Main text
+46,Final comparative analysis,Rmse Bootstrap Ci,phase_C_results/figures/phase_c_05_rmse_bootstrap_ci.png,Main text
+47,Final comparative analysis,Common Test Mae,phase_C_results/figures/phase_c_06_common_test_mae.png,Main text
+48,Final comparative analysis,Common Test Rmse,phase_C_results/figures/phase_c_07_common_test_rmse.png,Main text
+49,Final comparative analysis,Common Test Absolute Error Boxplots,phase_C_results/figures/phase_c_08_common_test_absolute_error_boxplots.png,Main text
+50,Final comparative analysis,Actual Vs Predicted,phase_C_results/figures/phase_c_09_actual_vs_predicted.png,Main text
+51,Final comparative analysis,Residual Comparison,phase_C_results/figures/phase_c_10_residual_comparison.png,Main text

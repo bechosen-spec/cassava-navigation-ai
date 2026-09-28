@@ -49,6 +49,7 @@ Approximate externally reported Phase A values are not promoted to verified metr
 - `phase_C_results/` validated metrics, corrected classification metrics, manifests, statistics, figures and indexes
 - `reports/COMPLETE_RESEARCH_TECHNICAL_REPORT.md` plus DOCX/PDF
 - `reports/PROJECT_EXPLAINED_SIMPLY.md`, objective traceability, figure/table catalogues and reproducibility guide
+- `reports/CASSAVA_NAVIGATION_COMPLETE_TECHNICAL_REPORT.md` plus its complete DOCX/PDF rebuild, evidence manifest, indexes and completeness audit
 
 ## Next Action
 
